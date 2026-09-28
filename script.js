@@ -15,22 +15,54 @@ const animals = [
 
 // ---------------------------------------------------------------------------
 // Task 1 — Animal names with .map()
+const animalNames = animals.map(function (animal) {
+	return animal.name;
 // ---------------------------------------------------------------------------
-
+console.log("Animal names:", animalNames);
 // ---------------------------------------------------------------------------
 // Task 2 — Log each animal with .forEach()
+	animals.forEach(function (animal) {
+	console.log(`${animal.name} is a ${animal.species}.`);
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
 // Task 3 — Log each animal again with for...of
+		for (const animal of animals) {
+	console.log(
+		`${animal.name} is ${animal.age} years old. Adopted: ${animal.adopted}`
+	);
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
 // Task 4 — Adopted and available animals with .filter()
+		const adoptedAnimals = animals.filter(function (animal) {
+	return animal.adopted === true;
+});
+
+const availableAnimals = animals.filter(function (animal) {
+	return animal.adopted === false;
+});
+
+console.log("Adopted animals:", adoptedAnimals);
+console.log("Available animals:", availableAnimals);
+
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
 // Task 5 — Available dogs with method chaining
+	const availableDogNames = animals
+	.filter(function (animal) {
+		return animal.species === "dog";
+	})
+	.filter(function (animal) {
+		return animal.adopted === false;
+	})
+	.map(function (animal) {
+		return animal.name;
+	});
+
+console.log("Available dogs:", availableDogNames);
+
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
