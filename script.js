@@ -14,28 +14,31 @@ const animals = [
 // Be sure to add your own comments to the code you are writing
 
 // ---------------------------------------------------------------------------
-// Task 1 — Animal names with .map()
+// Task 1: map() creates a new array by taking the name property from
+// every animal object, giving us a simple list of all animal names.
 const animalNames = animals.map(function (animal) {
 	return animal.name;
-// ---------------------------------------------------------------------------
-console.log("Animal names:", animalNames);
-// ---------------------------------------------------------------------------
-// Task 2 — Log each animal with .forEach()
-	animals.forEach(function (animal) {
-	console.log(`${animal.name} is a ${animal.species}.`);
-// ---------------------------------------------------------------------------
+});
 
-// ---------------------------------------------------------------------------
-// Task 3 — Log each animal again with for...of
-		for (const animal of animals) {
-	console.log(
-		`${animal.name} is ${animal.age} years old. Adopted: ${animal.adopted}`
-	);
-// ---------------------------------------------------------------------------
+console.log(animalNames);
 
-// ---------------------------------------------------------------------------
-// Task 4 — Adopted and available animals with .filter()
-		const adoptedAnimals = animals.filter(function (animal) {
+// Task 2: forEach() runs the callback once for every animal, allowing us
+// to display each animal's name and species without creating a new array.
+animals.forEach(function (animal) {
+	console.log(`Name: ${animal.name} Species: ${animal.species}`);
+});
+
+// Task 3: for...of also goes through each animal, but it lets us work
+// directly with each value from the array instead of using a callback.
+// Unlike forEach(), for...of can also be stopped with break or continue.
+for (const animal of animals) {
+	console.log(`Age: ${animal.age} Adopted: ${animal.adopted}`);
+}
+
+// Task 4: filter() creates new arrays without changing the original animals
+// array. One array contains adopted animals and the other contains animals
+// that are still available.
+const adoptedAnimals = animals.filter(function (animal) {
 	return animal.adopted === true;
 });
 
@@ -46,11 +49,9 @@ const availableAnimals = animals.filter(function (animal) {
 console.log("Adopted animals:", adoptedAnimals);
 console.log("Available animals:", availableAnimals);
 
-// ---------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------
-// Task 5 — Available dogs with method chaining
-	const availableDogNames = animals
+// Task 5: The first filter keeps only dogs, the second keeps only dogs
+// that are not adopted, and map() turns those animal objects into names.
+const availableDogs = animals
 	.filter(function (animal) {
 		return animal.species === "dog";
 	})
@@ -61,24 +62,21 @@ console.log("Available animals:", availableAnimals);
 		return animal.name;
 	});
 
-console.log("Available dogs:", availableDogNames);
+console.log(availableDogs);
 
-// ---------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------
-// Task 6 — Average age with .reduce() 
-	const totalAge = animals.reduce(function (sum, animal) {
+// Task 6: reduce() adds all of the animal ages together. Dividing the
+// total by animals.length gives the average age of the entire array.
+const totalAge = animals.reduce(function (sum, animal) {
 	return sum + animal.age;
 }, 0);
 
 const averageAge = totalAge / animals.length;
 
-console.log("Average age:", averageAge);
-// ---------------------------------------------------------------------------
+console.log(averageAge);
 
-// ---------------------------------------------------------------------------
-// Task 7 — Write isCat, isAdopted, and getName 
-		function isCat(animal) {
+// Task 7: These named functions each perform one small job so they can
+// be reused as callbacks in later array methods.
+function isCat(animal) {
 	return animal.species === "cat";
 }
 
@@ -90,35 +88,33 @@ function getName(animal) {
 	return animal.name;
 }
 
-// ---------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------
-// Task 8 — Adopted cats, using your own functions as callbacks
+// Task 8: First filter() uses isCat to keep only cats. The second filter()
+// uses isAdopted to keep only adopted cats. Finally, map() uses getName
+// to turn those animal objects into an array containing their names.
 const adoptedCatNames = animals
 	.filter(isCat)
 	.filter(isAdopted)
 	.map(getName);
 
-console.log("Adopted cats:", adoptedCatNames);
-// ---------------------------------------------------------------------------
+console.log(adoptedCatNames);
 
-// ---------------------------------------------------------------------------
-// Task 9 — Write makeSpeciesChecker (a closure)
-		function makeSpeciesChecker(species) {
+// Task 9: This function creates a new checker function for whichever
+// species is supplied. The returned function remembers the species value,
+// which is what makes this a closure.
+function makeSpeciesChecker(species) {
 	return function (animal) {
 		return animal.species === species;
 	};
 }
-// ---------------------------------------------------------------------------
 
-// ---------------------------------------------------------------------------
-// Task 10 — Build isDog and isRabbit, then log their names
-		const isDog = makeSpeciesChecker("dog");
+// Task 10: These two functions are created by the species checker, so
+// each one remembers a different species. They can then be passed directly
+// to filter(), followed by getName to return only the matching names.
+const isDog = makeSpeciesChecker("dog");
 const isRabbit = makeSpeciesChecker("rabbit");
 
 const dogNames = animals.filter(isDog).map(getName);
 const rabbitNames = animals.filter(isRabbit).map(getName);
 
-console.log("Dog names:", dogNames);
-console.log("Rabbit names:", rabbitNames);
-// ---------------------------------------------------------------------------
+console.log(dogNames);
+console.log(rabbitNames);
