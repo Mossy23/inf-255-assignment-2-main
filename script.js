@@ -66,15 +66,40 @@ console.log("Available dogs:", availableDogNames);
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// Task 6 — Average age with .reduce()
+// Task 6 — Average age with .reduce() 
+	const totalAge = animals.reduce(function (sum, animal) {
+	return sum + animal.age;
+}, 0);
+
+const averageAge = totalAge / animals.length;
+
+console.log("Average age:", averageAge);
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// Task 7 — Write isCat, isAdopted, and getName
+// Task 7 — Write isCat, isAdopted, and getName 
+		function isCat(animal) {
+	return animal.species === "cat";
+}
+
+function isAdopted(animal) {
+	return animal.adopted === true;
+}
+
+function getName(animal) {
+	return animal.name;
+}
+
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
 // Task 8 — Adopted cats, using your own functions as callbacks
+const adoptedCatNames = animals
+	.filter(isCat)
+	.filter(isAdopted)
+	.map(getName);
+
+console.log("Adopted cats:", adoptedCatNames);
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
